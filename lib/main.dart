@@ -1,6 +1,9 @@
 import 'dart:math';
-import 'package:flutter/material.dart';
+
 import 'package:animator/animator.dart';
+import 'package:flutter/material.dart';
+import 'package:loteria/widgets/bola.dart';
+import 'package:loteria/widgets/my_bar.dart';
 
 void main() => runApp(MyApp());
 
@@ -12,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: MyHomePage(title: 'Megasena'),
+      home: MyHomePage(title: 'Mega-sena'),
     );
   }
 }
@@ -41,9 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
+      appBar: MyBar(title: "Mega-Sena", colorTrevo: Colors.lightGreen,),
       body: Padding(
         padding: EdgeInsets.all(2.0),
         child: Padding(
@@ -54,9 +55,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 color: Colors.green,
                 padding: EdgeInsets.all(4.0),
                 onPressed: shuffle,
-                child: Text(
-                  "Embaralhar números",
-                  style: TextStyle(color: Colors.white),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      "Embaralhar números",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    Icon(Icons.refresh,color: Colors.white,)
+                  ],
                 ),
               ),
               myCard(1, jogo1),
@@ -97,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: () => {},
         isExtended: true,
         tooltip: 'Salvar Jogo',
-        child: const Icon(Icons.save),
+        child: const Icon(Icons.save,size: 32.0,),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
     );
@@ -113,9 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
             fontSize: 24.0,
           ),
         ),
-        title: Center(
-          child: myShapeRow(jogo),
-        ),
+        title: Center(child: myShapeRow(jogo)),
       ),
     );
   }
@@ -138,7 +143,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Animator(
       tweenMap: {
         "opacity": Tween<double>(begin: 0, end: 1),
-        "translation": Tween<Offset>(begin: Offset.zero, end: Offset(1, 0)),
+        "translation": Tween<Offset>(begin: Offset(5, 0), end: Offset.zero),
         "rotation": Tween<double>(begin: 4 * pi, end: 0),
       },
       duration: Duration(milliseconds: 800),
@@ -151,19 +156,7 @@ class _MyHomePageState extends State<MyHomePage> {
           translation: a["translation"].value,
           child: Transform.rotate(
             angle: a["rotation"].value,
-            child: Container(
-              child: Center(
-                child: Text(
-                  numero,
-                  style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold),
-                ),
-              ),
-              width: 25.0,
-              height: 25.0,
-              decoration: new BoxDecoration(
-                  color: Colors.green, shape: BoxShape.circle),
-            ),
+            child: Bola(numero),
           ),
         ),
       ),
