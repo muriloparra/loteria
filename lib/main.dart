@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
       ),
       home: MyHomePage(title: 'Mega-sena'),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
